@@ -1,0 +1,63 @@
+{{define "envelope"}}
+<!-- ==========================================================================
+     PAGE 1 — THE OPENING SCREEN
+     Full-Screen Minimalist Luxury Opening Experience
+     Soft #FFF5F5 • Subtle Paper Texture • Romantic Ambient Gradient
+     ========================================================================== -->
+<div id="envelope-cover" class="page-opening-screen" role="dialog" aria-modal="true" aria-label="Wedding Invitation Opening Screen">
+  <!-- Subtle Linen/Paper Texture & Romantic Gradient Background -->
+  <div class="opening-bg-ambient" aria-hidden="true"></div>
+
+  <!-- Minimal Elegant Framing -->
+  <div class="opening-frame-decor" aria-hidden="true">
+    <div class="frame-corner corner-tl"></div>
+    <div class="frame-corner corner-tr"></div>
+    <div class="frame-corner corner-bl"></div>
+    <div class="frame-corner corner-br"></div>
+  </div>
+
+  <div class="opening-content-box">
+    <!-- 1. Centered Fahad & Samar Official Monogram Logo (Animates in softly) -->
+    <div class="opening-logo-wrap anim-step-logo image-reveal">
+      <div class="logo-ambient-glow" aria-hidden="true"></div>
+      <img 
+        src="/static/images/fahad-samar-logo.png" 
+        alt="Muhammed Fahad &amp; Samar Salman official wedding monogram seal logo" 
+        class="opening-logo-image"
+        width="110"
+        height="165"
+        loading="eager"
+        fetchpriority="high"
+        decoding="sync">
+    </div>
+
+    <!-- 2. Sacred Bismillah in Classical Arabic Calligraphy (Gentle fade) -->
+    <div class="opening-bismillah-wrap anim-step-bismillah">
+      <div class="opening-bismillah-arabic" dir="rtl" lang="ar">
+        بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
+      </div>
+    </div>
+
+    <!-- 3. Small Invitation Phrase -->
+    <div class="opening-phrase-wrap anim-step-phrase">
+      <p class="opening-phrase-text">With the blessings of Allah</p>
+    </div>
+
+    <!-- 4. Subtle Minimal Decorative Element (Slow fade) -->
+    <div class="opening-divider-flourish anim-step-decor" aria-hidden="true">
+      <span class="flourish-bar"></span>
+      <span class="flourish-motif">❦</span>
+      <span class="flourish-bar"></span>
+    </div>
+
+    <!-- 5. Beautiful "OPEN INVITATION" Button -->
+    <div class="opening-btn-wrap anim-step-button">
+      <button id="open-invitation-btn" class="btn-open-invitation" aria-label="Open Wedding Invitation">
+        <span class="btn-open-label">OPEN INVITATION</span>
+        <span class="btn-open-symbol" aria-hidden="true">✦</span>
+      </button>
+      <span class="btn-open-caption">Tap to reveal invitation</span>
+    </div>
+  </div>
+</div>
+{{end}}

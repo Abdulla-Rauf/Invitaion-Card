@@ -1,0 +1,16 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Fahad & Samar//Wedding Invitation//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:wedding-fahad-and-samar-20261129@fahad-weds-samar.com
+DTSTAMP:20261005T000000Z
+DTSTART:20261129T060000Z
+DTEND:20261129T093000Z
+SUMMARY:Muhammed Fahad & Samar Salman — Wedding Reception
+DESCRIPTION:Wedding reception of Muhammed Fahad & Samar Salman at GLAMORRA International Convention Centre, Pookkottumpadam, Kerala.
+LOCATION:GLAMORRA International Convention Centre, Pookkottumpadam, Kerala
+STATUS:CONFIRMED
+END:VEVENT
+END:VCALENDAR

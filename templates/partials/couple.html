@@ -1,0 +1,70 @@
+{{define "couple"}}
+<!-- ==========================================================================
+     PAGE 2 — THE COUPLE INTRODUCTION
+     Cinematic & Romantic Presentation
+     Features: couple-illustration.png • Fahad & Samar typography
+     ========================================================================== -->
+<section id="couple" class="section page-couple-intro" aria-label="Page 2 - The Couple Introduction">
+  <div class="couple-intro-container">
+
+    <!-- Top: Small Decorative Text -->
+    <div class="intro-blessing-wrap couple-anim-node node-blessing">
+      <div class="intro-blessing-line">
+        <span class="blessing-star" aria-hidden="true">✦</span>
+        <p class="intro-blessing-text">Together with the blessings of Allah</p>
+        <span class="blessing-star" aria-hidden="true">✦</span>
+      </div>
+    </div>
+
+    <!-- Center: Large Couple Illustration (Never cropped, natural aspect ratio) -->
+    <figure class="intro-illustration-wrap couple-anim-node node-illustration image-reveal" style="margin: 0;">
+      <div class="illustration-aura" aria-hidden="true"></div>
+      <img 
+        src="/static/images/couple-illustration.png" 
+        alt="Watercolor wedding portrait illustration of Muhammed Fahad and Samar Salman" 
+        class="intro-couple-img"
+        width="736"
+        height="979"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async">
+    </figure>
+
+    <!-- Below the Illustration: Fahad & Samar with Elegant Wedding Typography -->
+    <header class="intro-names-showcase">
+      <!-- Decorative Top Line Framing (Gold/Burgundy) -->
+      <div class="intro-decor-frame top-frame couple-anim-node node-decor" aria-hidden="true">
+        <span class="decor-line"></span>
+        <span class="decor-motif">❦</span>
+        <span class="decor-line"></span>
+      </div>
+
+      <!-- Main H1 Heading for Semantic Hierarchy -->
+      <h1 class="intro-couple-title" aria-label="Muhammed Fahad and Samar Salman">
+        <!-- Groom: Fahad -->
+        <span class="intro-name-line groom-line couple-anim-node node-groom">
+          <span class="intro-name-text">Fahad</span>
+        </span>
+
+        <!-- Ampersand: & -->
+        <span class="intro-ampersand-wrap couple-anim-node node-ampersand" aria-hidden="true">
+          <span class="intro-ampersand">&amp;</span>
+        </span>
+
+        <!-- Bride: Samar -->
+        <span class="intro-name-line bride-line couple-anim-node node-bride">
+          <span class="intro-name-text">Samar</span>
+        </span>
+      </h1>
+
+      <!-- Decorative Bottom Line Framing (Gold/Burgundy) -->
+      <div class="intro-decor-frame bottom-frame couple-anim-node node-decor" aria-hidden="true">
+        <span class="decor-line"></span>
+        <span class="decor-motif">✦</span>
+        <span class="decor-line"></span>
+      </div>
+    </header>
+
+  </div>
+</section>
+{{end}}

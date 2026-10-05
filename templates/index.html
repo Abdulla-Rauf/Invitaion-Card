@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+{{template "head" .}}
+<body class="envelope-locked">
+  <!-- Falling Jasmine Petals & Golden Stardust Canvas -->
+  <canvas id="petals-canvas" class="ambient-canvas" aria-hidden="true"></canvas>
+
+  <!-- SVG Filter and Gradients definitions -->
+  <svg class="svg-defs" aria-hidden="true">
+    <defs>
+      <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#bf953f" />
+        <stop offset="25%" stop-color="#fcf6ba" />
+        <stop offset="50%" stop-color="#b38728" />
+        <stop offset="75%" stop-color="#fbf5b7" />
+        <stop offset="100%" stop-color="#aa771c" />
+      </linearGradient>
+      <linearGradient id="goldGradSoft" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#d4af37" />
+        <stop offset="50%" stop-color="#f3e5ab" />
+        <stop offset="100%" stop-color="#aa771c" />
+      </linearGradient>
+    </defs>
+  </svg>
+
+  <!-- Background Audio Element (Optionally played via user toggle) -->
+  <audio id="bg-audio" preload="metadata" loop>
+    <source src="/static/audio/wedding.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Interactive Envelope Cover Screen -->
+  {{template "envelope" .}}
+
+  <!-- Main Unfolded Invitation Card Experience -->
+  <main id="invitation-main" class="invitation-main" aria-hidden="true">
+    <!-- Card Frame Wrapper (Luxury Mobile-First Center Card Presentation) -->
+    <div class="invitation-parchment-frame">
+      <!-- Ornate Architectural Framing & Botanical Edge Flourishes -->
+      <div class="outer-gold-border"></div>
+      <div class="inner-filigree-border"></div>
+
+      <!-- Top Card Edge Floral Flourish -->
+      <div class="card-edge-flourish edge-top" aria-hidden="true">
+        <svg viewBox="0 0 180 20" class="card-edge-svg" fill="none">
+          <path d="M10 10 Q 50 14 90 6 Q 130 14 170 10" stroke="#C5A059" stroke-width="0.9" opacity="0.75"/>
+          <path d="M72 8 C 67 4 70 1 74 3 C 76 6 74 9 72 8 Z" fill="#7A8B7B" opacity="0.8"/>
+          <path d="M108 8 C 113 4 110 1 106 3 C 104 6 106 9 108 8 Z" fill="#7A8B7B" opacity="0.8"/>
+          <circle cx="82" cy="7" r="3" fill="#E2B4BD" opacity="0.9"/>
+          <circle cx="98" cy="7" r="3" fill="#E2B4BD" opacity="0.9"/>
+          <circle cx="90" cy="6.5" r="4.2" fill="#6B2337"/>
+          <circle cx="90" cy="6.5" r="1.3" fill="#C5A059"/>
+        </svg>
+      </div>
+
+      <!-- Section Partials (Exact User Wireframe Sequence) -->
+      {{template "couple" .}}
+      {{template "reception" .}}
+      {{template "wedding-date" .}}
+      {{template "countdown" .}}
+      {{template "venue" .}}
+      {{template "footer" .}}
+
+      <!-- Bottom Card Edge Floral Flourish -->
+      <div class="card-edge-flourish edge-bottom" aria-hidden="true">
+        <svg viewBox="0 0 180 20" class="card-edge-svg" fill="none">
+          <path d="M10 10 Q 50 6 90 14 Q 130 6 170 10" stroke="#C5A059" stroke-width="0.9" opacity="0.75"/>
+          <path d="M72 12 C 67 16 70 19 74 17 C 76 14 74 11 72 12 Z" fill="#7A8B7B" opacity="0.8"/>
+          <path d="M108 12 C 113 16 110 19 106 17 C 104 14 106 11 108 12 Z" fill="#7A8B7B" opacity="0.8"/>
+          <circle cx="82" cy="13" r="3" fill="#E2B4BD" opacity="0.9"/>
+          <circle cx="98" cy="13" r="3" fill="#E2B4BD" opacity="0.9"/>
+          <circle cx="90" cy="13.5" r="4.2" fill="#6B2337"/>
+          <circle cx="90" cy="13.5" r="1.3" fill="#C5A059"/>
+        </svg>
+      </div>
+    </div>
+  </main>
+
+  <!-- Floating Luxury Circular Music Control (Fixed Bottom-Right) -->
+  <button id="music-toggle-btn" class="music-fab-btn" aria-label="Play background music" title="Play background music">
+    <span class="music-icon-state state-paused" id="music-icon-paused" aria-hidden="false">♫</span>
+    <span class="music-icon-state state-playing hidden" id="music-icon-playing" aria-hidden="true">
+      <span class="playing-equalizer">
+        <span class="eq-bar bar-1"></span>
+        <span class="eq-bar bar-2"></span>
+        <span class="eq-bar bar-3"></span>
+      </span>
+    </span>
+  </button>
+
+  <!-- Scroll-to-Top Floating Button (Stacked neatly above music control) -->
+  <button id="scroll-top-btn" class="scroll-top-btn" aria-label="Scroll back to top" title="Back to top">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- JavaScript Application (Deferred for Non-Blocking Initial Paint) -->
+  <script src="/static/js/app.js?v=16.0" defer></script>
+</body>
+</html>

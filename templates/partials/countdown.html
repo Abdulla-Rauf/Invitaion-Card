@@ -1,0 +1,74 @@
+{{define "countdown"}}
+<!-- ==========================================================================
+     PAGE / SECTION — THE BLESSED COUNTDOWN
+     Live accurate countdown to 29 November 2026 (Asia/Kolkata)
+     Luxury ivory/blush glass-morphism cards: DAYS, HOURS, MINUTES, SECONDS
+     ========================================================================== -->
+<section id="countdown" class="section countdown-section" aria-label="Wedding Countdown">
+  <div class="section-container">
+    <div class="section-header fade-in-up">
+      <span class="section-eyebrow">AWAITING WITH JOY</span>
+      <h2 class="section-title">The Blessed Countdown</h2>
+      <div class="gold-flourish" aria-hidden="true"><span></span><i>❦</i><span></span></div>
+      <p class="section-desc">Counting down every moment until we celebrate together</p>
+    </div>
+
+    <!-- Countdown Timer Wrapper -->
+    <div class="countdown-wrapper fade-in-up" data-delay="100">
+      
+      <!-- Four Luxury Glass Cards: Desktop 4 in 1 row, Mobile 2x2 grid -->
+      <div id="countdown-cards-grid" class="countdown-glass-grid" data-target="{{.Event.CountdownTimestamp}}">
+        
+        <!-- Days Card -->
+        <div class="glass-countdown-card">
+          <div class="card-glass-glow" aria-hidden="true"></div>
+          <span id="countdown-days" class="countdown-number">00</span>
+          <span class="countdown-label">DAYS</span>
+        </div>
+
+        <!-- Hours Card -->
+        <div class="glass-countdown-card">
+          <div class="card-glass-glow" aria-hidden="true"></div>
+          <span id="countdown-hours" class="countdown-number">00</span>
+          <span class="countdown-label">HOURS</span>
+        </div>
+
+        <!-- Minutes Card -->
+        <div class="glass-countdown-card">
+          <div class="card-glass-glow" aria-hidden="true"></div>
+          <span id="countdown-minutes" class="countdown-number">00</span>
+          <span class="countdown-label">MINUTES</span>
+        </div>
+
+        <!-- Seconds Card -->
+        <div class="glass-countdown-card">
+          <div class="card-glass-glow" aria-hidden="true"></div>
+          <span id="countdown-seconds" class="countdown-number">00</span>
+          <span class="countdown-label">SECONDS</span>
+        </div>
+
+      </div>
+
+      <!-- Zero-State Message (Displayed when countdown reaches zero) -->
+      <div id="countdown-celebration-msg" class="countdown-celebration hidden" aria-live="polite">
+        <div class="celebration-glass-pill">
+          <span class="celebration-sparkle" aria-hidden="true">✨</span>
+          <span class="celebration-text">Today is the day! ❤️</span>
+          <span class="celebration-sparkle" aria-hidden="true">✨</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="countdown-caption fade-in-up" data-delay="150">
+      <div class="caption-decor" aria-hidden="true">
+        <span class="caption-line"></span>
+        <span class="caption-star">✦</span>
+        <span class="caption-line"></span>
+      </div>
+      <p class="caption-datetime">Sunday, 29 November 2026 &bull; 11:30 AM IST</p>
+      <p class="caption-timezone">Indian Standard Time (Asia/Kolkata)</p>
+    </div>
+  </div>
+</section>
+{{end}}

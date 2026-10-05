@@ -1,0 +1,161 @@
+{
+  "Meta": {
+    "Title": "Fahad & Samar | Wedding Invitation",
+    "CoupleHeadline": "Fahad & Samar",
+    "Description": "Join us as we celebrate the wedding reception of Muhammed Fahad & Samar Salman on 29 November 2026.",
+    "URL": "https://fahad-weds-samar.com",
+    "ThemeColor": "#FFF5F5",
+    "OgImage": "/static/images/couple-illustration.png",
+    "OgImageFull": "https://fahad-weds-samar.com/static/images/couple-illustration.png",
+    "OgImageAlt": "Muhammed Fahad & Samar Salman Wedding Reception Invitation Illustration"
+  },
+  "Quran": {
+    "Surah": "Surah Ar-Rum 30:21",
+    "Arabic": "وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً ۚ إِنَّ فِي ذَٰلِكَ لَآيَاتٍ لِّقَوْمٍ يَتَفَكَّرُونَ",
+    "Translation": "And among His signs is that He created for you mates from among yourselves, that you may dwell in tranquility with them; and He placed between you love and mercy. Verily in that are signs for a people who reflect."
+  },
+  "Bismillah": {
+    "Arabic": "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",
+    "Translation": "In the Name of Allah, the Most Gracious, the Most Merciful"
+  },
+  "Greeting": {
+    "Honorific": "Assalamu Alaikum Wa Rahmatullahi Wa Barakatuh",
+    "IntroLine": "Together with their beloved families",
+    "SubIntro": "request the honour of your presence and warm prayers to celebrate the wedding reception of"
+  },
+  "Groom": {
+    "Name": "Muhammed Fahad",
+    "Title": "Groom",
+    "Father": "Mr Aboobacker CK",
+    "Mother": "Ms Sulaikha M",
+    "Prefix": "Son of",
+    "Tagline": "Embracing a new chapter under Allah's divine grace",
+    "Initial": "F"
+  },
+  "Bride": {
+    "Name": "Samar Salman",
+    "Title": "Bride",
+    "Father": "Mr Salman N",
+    "Mother": "Ms Naseera C",
+    "Prefix": "Daughter of",
+    "Tagline": "Stepping into a lifetime of love, peace, and serenity",
+    "Initial": "S"
+  },
+  "Event": {
+    "Badge": "Insha Allah",
+    "Type": "Wedding Reception",
+    "DateDisplay": "Sunday, 29 November 2026",
+    "HijriDisplay": "19 Jumada al-Awwal 1448 AH",
+    "TimeDisplay": "11:30 AM to 03:00 PM (IST)",
+    "ISODatetime": "2026-11-29T11:30:00+05:30",
+    "CountdownTimestamp": "2026-11-29T11:30:00+05:30",
+    "CalendarStart": "20261129T060000Z",
+    "CalendarEnd": "20261129T093000Z"
+  },
+  "Venue": {
+    "Name": "GLAMORRA International Convention Centre",
+    "City": "Pookkottumpadam",
+    "Region": "Nilambur, Kerala",
+    "Pincode": "679332",
+    "FullAddress": "GLAMORRA International Convention Centre, Pookkottumpadam, Nilambur, Malappuram, Kerala 679332",
+    "MapsURL": "https://maps.app.goo.gl/mY9xt3T154B1GN4z6?g_st=iw",
+    "EmbedQuery": "GLAMORRA International Convention Centre Pookkottumpadam",
+    "DistanceNote": "Easily accessible along Nilambur – Pookkottumpadam Road, with ample parking space."
+  },
+  "Dua": {
+    "Arabic": "بَارَكَ اللَّهُ لَكَ وَبَارَكَ عَلَيْكَ وَجَمَعَ بَيْنَكُمَا فِي خَيْرٍ",
+    "Transliteration": "Bārakallāhu laka wa bāraka 'alayka wa jama'a baynakumā fī khayr",
+    "Meaning": "May Allah bless you and shower His blessings upon you and unite you in goodness.",
+    "Reference": "Sunan Abi Dawud & At-Tirmidhi"
+  },
+  "Program": [
+    {
+      "Time": "11:30 AM",
+      "Title": "Warm Welcome of Guests",
+      "Desc": "Reception doors open with traditional hospitality and welcome refreshments."
+    },
+    {
+      "Time": "12:15 PM",
+      "Title": "Grand Welcome of the Couple",
+      "Desc": "Arrival of Muhammed Fahad and Samar Salman amidst family prayers and joy."
+    },
+    {
+      "Time": "12:45 PM",
+      "Title": "Sumptuous Wedding Feast",
+      "Desc": "Traditional celebratory banquet featuring Kerala Malabar authentic delicacies."
+    },
+    {
+      "Time": "02:30 PM",
+      "Title": "Dua & Photography",
+      "Desc": "Heartfelt family prayers, blessings, and memorable photo sessions with loved ones."
+    }
+  ],
+  "Contacts": [
+    {
+      "Side": "Groom's Family",
+      "Name": "Mr Aboobacker CK",
+      "Relation": "Father of the Groom",
+      "Phone": "+91 98470 00000",
+      "Whatsapp": "919847000000"
+    },
+    {
+      "Side": "Bride's Family",
+      "Name": "Mr Salman N",
+      "Relation": "Father of the Bride",
+      "Phone": "+91 94470 00000",
+      "Whatsapp": "919447000000"
+    }
+  ],
+  "Share": {
+    "WhatsappText": "Assalamu Alaikum! You are cordially invited to the wedding reception of Muhammed Fahad & Samar Salman on Sunday, 29 November 2026 at GLAMORRA International Convention Centre, Pookkottumpadam, Kerala. Please grace the occasion with your presence and prayers: "
+  },
+  "meta": {
+    "title": "Fahad & Samar | Wedding Invitation",
+    "couple_headline": "Fahad & Samar",
+    "description": "Join us as we celebrate the wedding reception of Muhammed Fahad & Samar Salman on 29 November 2026.",
+    "url": "https://fahad-weds-samar.com",
+    "theme_color": "#FFF5F5"
+  },
+  "groom": {
+    "name": "Muhammed Fahad",
+    "father": "Mr Aboobacker CK",
+    "mother": "Ms Sulaikha M"
+  },
+  "bride": {
+    "name": "Samar Salman",
+    "father": "Mr Salman N",
+    "mother": "Ms Naseera C"
+  },
+  "event": {
+    "hijri_display": "19 Jumada al-Awwal 1448 AH",
+    "countdown_timestamp": "2026-11-29T11:30:00+05:30"
+  },
+  "venue": {
+    "name": "GLAMORRA International Convention Centre",
+    "city": "Pookkottumpadam",
+    "region": "Nilambur, Kerala",
+    "maps_url": "https://maps.app.goo.gl/mY9xt3T154B1GN4z6?g_st=iw"
+  },
+  "dua": {
+    "arabic": "بَارَكَ اللَّهُ لَكَ وَبَارَكَ عَلَيْكَ وَجَمَعَ بَيْنَكُمَا فِي خَيْرٍ",
+    "transliteration": "Bārakallāhu laka wa bāraka 'alayka wa jama'a baynakumā fī khayr",
+    "meaning": "May Allah bless you and shower His blessings upon you and unite you in goodness.",
+    "reference": "Sunan Abi Dawud & At-Tirmidhi"
+  },
+  "contacts": [
+    {
+      "side": "Groom's Family",
+      "name": "Mr Aboobacker CK",
+      "relation": "Father of the Groom",
+      "phone": "+91 98470 00000",
+      "whatsapp": "919847000000"
+    },
+    {
+      "side": "Bride's Family",
+      "name": "Mr Salman N",
+      "relation": "Father of the Bride",
+      "phone": "+91 94470 00000",
+      "whatsapp": "919447000000"
+    }
+  ]
+}
