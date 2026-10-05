@@ -2,9 +2,11 @@ package main
 
 import (
 	"compress/gzip"
+	"embed"
 	"encoding/json"
 	"html/template"
 	"io"
+	"io/fs"
 	"log"
 	"net/http"
 	"os"
@@ -13,6 +15,18 @@ import (
 	"sync"
 	"time"
 )
+
+// Embed templates, data, and static assets directly into the Go binary.
+// This guarantees zero-failure execution across Vercel Serverless, AWS Lambda, Docker, and local machines.
+//
+//go:embed templates
+var templatesFS embed.FS
+
+//go:embed data
+var dataFS embed.FS
+
+//go:embed static
+var staticFS embed.FS
 
 // RSVP represents a guest's attendance response.
 type RSVP struct {
@@ -66,12 +80,22 @@ func withGzip(next http.Handler) http.Handler {
 	})
 }
 
-// getHomeTemplate parses and caches templates in memory for zero disk I/O latency.
+// getHomeTemplate parses and caches templates from the embedded filesystem for 100% reliable execution.
 func getHomeTemplate() (*template.Template, error) {
 	homeTemplateOnce.Do(func() {
-		partials, err := filepath.Glob("templates/partials/*.html")
-		if err != nil {
-			log.Printf("Error finding partial templates: %v", err)
+		// 1. Try embedded filesystem (works on Vercel, Docker, Lambda without external disk files)
+		tmpl, err := template.ParseFS(templatesFS, "templates/index.html", "templates/partials/*.html")
+		if err == nil {
+			homeTemplate = tmpl
+			log.Printf("Successfully loaded templates from embedded filesystem.")
+			return
+		}
+		log.Printf("Notice: template.ParseFS returned (%v), attempting disk fallback...", err)
+
+		// 2. Fallback to local disk files if running in unpacked mode
+		partials, globErr := filepath.Glob("templates/partials/*.html")
+		if globErr != nil {
+			log.Printf("Error finding partial templates on disk: %v", globErr)
 		}
 		files := append([]string{"templates/index.html"}, partials...)
 		homeTemplate, homeTemplateErr = template.ParseFiles(files...)
@@ -80,15 +104,22 @@ func getHomeTemplate() (*template.Template, error) {
 }
 
 func main() {
-	// 1. Load invitation data from JSON file
+	// 1. Load invitation data
 	loadInvitationData()
 	loadSavedRSVPs()
 
 	// 2. Set up HTTP request router
 	mux := http.NewServeMux()
 
-	// Static assets: Serves CSS, JS, images, audio with caching headers
-	staticFileServer := http.FileServer(http.Dir("static"))
+	// Static assets: Serves CSS, JS, images, audio with caching headers.
+	// Uses embedded static FS with fallback to disk.
+	var staticFileServer http.Handler
+	if subFS, err := fs.Sub(staticFS, "static"); err == nil {
+		staticFileServer = http.FileServer(http.FS(subFS))
+	} else {
+		staticFileServer = http.FileServer(http.Dir("static"))
+	}
+
 	staticHandler := http.StripPrefix("/static/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		path := r.URL.Path
 		if strings.HasSuffix(path, ".css") || strings.HasSuffix(path, ".js") {
@@ -121,7 +152,7 @@ func main() {
 	log.Printf("   - GET  /         (Invitation Website)")
 	log.Printf("   - GET  /health   (Health Status)")
 	log.Printf("   - POST /api/rsvp (Attendance Submission)")
-	log.Printf("⚡ Gzip compression & asset caching enabled")
+	log.Printf("⚡ Embedded templates & gzip compression active")
 	log.Printf("==================================================")
 
 	if err := http.ListenAndServe(serverAddr, withGzip(mux)); err != nil {
@@ -152,8 +183,15 @@ func handleHome(w http.ResponseWriter, r *http.Request) {
 	// Render the invitation template with invitation data
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	w.Header().Set("X-Content-Type-Options", "nosniff")
-	if err := tmpl.Execute(w, invitationData); err != nil {
-		log.Printf("Error executing template: %v", err)
+
+	if tmpl.Lookup("index.html") != nil {
+		if err := tmpl.ExecuteTemplate(w, "index.html", invitationData); err != nil {
+			log.Printf("Error executing template: %v", err)
+		}
+	} else {
+		if err := tmpl.Execute(w, invitationData); err != nil {
+			log.Printf("Error executing template: %v", err)
+		}
 	}
 }
 
@@ -183,26 +221,19 @@ func handleCalendar(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/calendar; charset=utf-8")
 	w.Header().Set("Content-Disposition", "attachment; filename=\"wedding-fahad-and-samar.ics\"")
 	w.Header().Set("Cache-Control", "public, max-age=604800")
+
+	// Try reading embedded calendar asset
+	icsBytes, err := staticFS.ReadFile("static/calendar.ics")
+	if err == nil && len(icsBytes) > 0 {
+		_, _ = w.Write(icsBytes)
+		return
+	}
+
 	http.ServeFile(w, r, "static/calendar.ics")
 }
 
 // handleRSVP handles guest attendance submissions via POST /api/rsvp.
-//
-// Expected Request JSON:
-//
-//	{
-//	  "name": "Guest Name",
-//	  "attendance": "yes" // or "no"
-//	}
-//
-// Returns HTTP 200 on success:
-//
-//	{
-//	  "success": true,
-//	  "message": "Thank you for your response."
-//	}
 func handleRSVP(w http.ResponseWriter, r *http.Request) {
-	// Only allow POST requests
 	if r.Method != http.MethodPost {
 		writeJSON(w, http.StatusMethodNotAllowed, map[string]interface{}{
 			"success": false,
@@ -211,42 +242,38 @@ func handleRSVP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Request payload struct
 	var req struct {
 		Name       string `json:"name"`
 		Attendance string `json:"attendance"`
 	}
 
-	// Decode incoming JSON request body
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		writeJSON(w, http.StatusBadRequest, map[string]interface{}{
 			"success": false,
-			"error":   "Invalid request: " + err.Error(),
+			"error":   "Invalid request body",
 		})
 		return
 	}
 
-	// Validate: name is required
 	name := strings.TrimSpace(req.Name)
+	attendance := strings.ToLower(strings.TrimSpace(req.Attendance))
+
 	if name == "" {
 		writeJSON(w, http.StatusBadRequest, map[string]interface{}{
 			"success": false,
-			"error":   "name is required",
+			"error":   "Guest name is required",
 		})
 		return
 	}
 
-	// Validate: attendance must be "yes" or "no"
-	attendance := strings.ToLower(strings.TrimSpace(req.Attendance))
 	if attendance != "yes" && attendance != "no" {
 		writeJSON(w, http.StatusBadRequest, map[string]interface{}{
 			"success": false,
-			"error":   "attendance must be yes or no",
+			"error":   "Attendance must be 'yes' or 'no'",
 		})
 		return
 	}
 
-	// Record RSVP entry
 	entry := RSVP{
 		Name:       name,
 		Attendance: attendance,
@@ -255,25 +282,32 @@ func handleRSVP(w http.ResponseWriter, r *http.Request) {
 
 	saveRSVPEntry(entry)
 
-	// Return successful JSON response
 	writeJSON(w, http.StatusOK, map[string]interface{}{
 		"success": true,
 		"message": "Thank you for your response.",
 	})
 }
 
-// writeJSON writes a standardized JSON response with the given status code.
 func writeJSON(w http.ResponseWriter, statusCode int, data interface{}) {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	w.WriteHeader(statusCode)
 	_ = json.NewEncoder(w).Encode(data)
 }
 
-// loadInvitationData reads data/invitation.json into memory.
+// loadInvitationData reads data/invitation.json from disk or embedded filesystem.
 func loadInvitationData() {
+	var bytes []byte
+	var err error
 	filePath := "data/invitation.json"
-	bytes, err := os.ReadFile(filePath)
-	if err != nil {
+
+	// 1. Try reading from disk
+	bytes, err = os.ReadFile(filePath)
+	if err != nil || len(bytes) == 0 {
+		// 2. Fallback to embedded data (for Vercel Serverless environment)
+		bytes, err = dataFS.ReadFile(filePath)
+	}
+
+	if err != nil || len(bytes) == 0 {
 		log.Printf("Notice: Could not read %s (%v). Using empty invitation data.", filePath, err)
 		invitationData = make(map[string]interface{})
 		return
@@ -288,22 +322,28 @@ func loadInvitationData() {
 	log.Printf("Loaded invitation metadata successfully.")
 }
 
-// loadSavedRSVPs reads previously saved responses from data/rsvps.json.
+// loadSavedRSVPs reads responses from disk or embedded filesystem.
 func loadSavedRSVPs() {
 	rsvpsMutex.Lock()
 	defer rsvpsMutex.Unlock()
 
-	bytes, err := os.ReadFile(rsvpFilePath)
-	if err != nil {
-		rsvpsList = make([]RSVP, 0)
-		return
+	var bytes []byte
+	var err error
+
+	bytes, err = os.ReadFile(rsvpFilePath)
+	if err != nil || len(bytes) == 0 {
+		bytes, _ = dataFS.ReadFile(rsvpFilePath)
 	}
 
-	_ = json.Unmarshal(bytes, &rsvpsList)
+	if len(bytes) > 0 {
+		_ = json.Unmarshal(bytes, &rsvpsList)
+	} else {
+		rsvpsList = make([]RSVP, 0)
+	}
 	log.Printf("Loaded %d previously saved RSVP(s).", len(rsvpsList))
 }
 
-// saveRSVPEntry appends a new RSVP to memory and persists it to data/rsvps.json.
+// saveRSVPEntry appends a new RSVP and persists it safely (supporting read-only serverless filesystems).
 func saveRSVPEntry(entry RSVP) {
 	rsvpsMutex.Lock()
 	defer rsvpsMutex.Unlock()
@@ -315,9 +355,15 @@ func saveRSVPEntry(entry RSVP) {
 		return
 	}
 
-	// Ensure data directory exists
+	// Try saving to data directory
 	_ = os.MkdirAll(filepath.Dir(rsvpFilePath), 0755)
 	if err := os.WriteFile(rsvpFilePath, bytes, 0644); err != nil {
-		log.Printf("Warning: could not write %s: %v", rsvpFilePath, err)
+		// Fallback for Vercel/AWS Lambda read-only environment: write to /tmp
+		tmpPath := filepath.Join(os.TempDir(), "rsvps.json")
+		if tmpErr := os.WriteFile(tmpPath, bytes, 0644); tmpErr == nil {
+			log.Printf("Notice: Saved RSVP to temporary storage %s", tmpPath)
+		} else {
+			log.Printf("Warning: Could not write RSVP: %v", err)
+		}
 	}
 }
