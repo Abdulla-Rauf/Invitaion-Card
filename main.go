@@ -65,7 +65,7 @@ func withGzip(next http.Handler) http.Handler {
 		}
 		// Skip compression for binaries and pre-compressed media
 		path := r.URL.Path
-		if strings.HasSuffix(path, ".png") || strings.HasSuffix(path, ".jpg") || strings.HasSuffix(path, ".jpeg") || strings.HasSuffix(path, ".mp3") {
+		if strings.HasSuffix(path, ".png") || strings.HasSuffix(path, ".jpg") || strings.HasSuffix(path, ".jpeg") || strings.HasSuffix(path, ".mp3") || strings.HasSuffix(path, ".mpeg") {
 			next.ServeHTTP(w, r)
 			return
 		}
@@ -124,7 +124,7 @@ func main() {
 		path := r.URL.Path
 		if strings.HasSuffix(path, ".css") || strings.HasSuffix(path, ".js") {
 			w.Header().Set("Cache-Control", "public, max-age=604800, stale-while-revalidate=86400")
-		} else if strings.HasSuffix(path, ".png") || strings.HasSuffix(path, ".jpg") || strings.HasSuffix(path, ".jpeg") || strings.HasSuffix(path, ".webp") || strings.HasSuffix(path, ".mp3") {
+		} else if strings.HasSuffix(path, ".png") || strings.HasSuffix(path, ".jpg") || strings.HasSuffix(path, ".jpeg") || strings.HasSuffix(path, ".webp") || strings.HasSuffix(path, ".mp3") || strings.HasSuffix(path, ".mpeg") {
 			w.Header().Set("Cache-Control", "public, max-age=2592000, immutable")
 		}
 		w.Header().Set("X-Content-Type-Options", "nosniff")
